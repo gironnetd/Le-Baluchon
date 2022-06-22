@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nn8-OK-RzZ">
+    <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -8,20 +8,108 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Exchange Rate-->
+        <scene sceneID="fA6-CV-Acw">
+            <objects>
+                <viewController id="Akg-g5-pGb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zmn-0X-75K">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exchange Rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CnC-J2-mYm">
+                                <rect key="frame" x="157.66666666666666" y="452.66666666666669" width="112.99999999999997" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ptz-Rc-919"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="CnC-J2-mYm" firstAttribute="centerX" secondItem="zmn-0X-75K" secondAttribute="centerX" id="t78-xg-UQ7"/>
+                            <constraint firstItem="CnC-J2-mYm" firstAttribute="centerY" secondItem="zmn-0X-75K" secondAttribute="centerY" id="xUY-8g-Tjm"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Exchange Rate" id="g9x-vp-2UD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zFf-Rp-bBL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-301" y="324"/>
+        </scene>
+        <!--Weather-->
+        <scene sceneID="U2A-dX-VbE">
+            <objects>
+                <viewController id="11j-hK-5gn" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nhV-Pv-ZOx">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHK-qA-3ik">
+                                <rect key="frame" x="181.66666666666666" y="452.66666666666669" width="65" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vqo-Ff-faI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JHK-qA-3ik" firstAttribute="centerX" secondItem="nhV-Pv-ZOx" secondAttribute="centerX" id="92E-XW-8jw"/>
+                            <constraint firstItem="JHK-qA-3ik" firstAttribute="centerY" secondItem="nhV-Pv-ZOx" secondAttribute="centerY" id="vlk-nt-Rgl"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Weather" id="oMV-5j-wXz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OLe-oy-hx7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-301" y="-542"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="JFQ-0f-i0S">
+            <objects>
+                <tabBarController id="Nn8-OK-RzZ" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xlG-C9-O5m">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="11j-hK-5gn" kind="relationship" relationship="viewControllers" id="lx1-F7-VwF"/>
+                        <segue destination="Akg-g5-pGb" kind="relationship" relationship="viewControllers" id="B71-ee-Jau"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="FN1-8V-yHE"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1qb-i0-1jj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1190" y="-100"/>
+        </scene>
+        <!--Translate-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qj9-Bf-7AP">
+                                <rect key="frame" x="179" y="452.66666666666669" width="70" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qj9-Bf-7AP" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3XT-cS-n7Q"/>
+                            <constraint firstItem="qj9-Bf-7AP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="goR-7J-E7z"/>
+                        </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Translate" id="AfW-Xd-yGo"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="141" y="123"/>
+            <point key="canvasLocation" x="868" y="-100"/>
         </scene>
     </scenes>
     <resources>
