@@ -14,18 +14,10 @@
 		6D423DB22863316B0095216C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D423DB12863316B0095216C /* Assets.xcassets */; };
 		6D423DB52863316B0095216C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D423DB32863316B0095216C /* LaunchScreen.storyboard */; };
 		6D423DC02863316C0095216C /* Le_BaluchonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D423DBF2863316C0095216C /* Le_BaluchonTests.swift */; };
-		6D423DCB2863316C0095216C /* Le_BaluchonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D423DCA2863316C0095216C /* Le_BaluchonUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		6D423DBC2863316C0095216C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6D423D9D286331600095216C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6D423DA4286331610095216C;
-			remoteInfo = "Le Baluchon";
-		};
-		6D423DC72863316C0095216C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6D423D9D286331600095216C /* Project object */;
 			proxyType = 1;
@@ -46,9 +38,6 @@
 		6D423DBB2863316C0095216C /* Le BaluchonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Le BaluchonTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D423DBF2863316C0095216C /* Le_BaluchonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Le_BaluchonTests.swift; sourceTree = "<group>"; };
 		6D423DC12863316C0095216C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6D423DC62863316C0095216C /* Le BaluchonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Le BaluchonUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6D423DCA2863316C0095216C /* Le_BaluchonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Le_BaluchonUITests.swift; sourceTree = "<group>"; };
-		6D423DCC2863316C0095216C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,13 +55,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6D423DC32863316C0095216C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -81,7 +63,6 @@
 			children = (
 				6D423DA7286331610095216C /* Le Baluchon */,
 				6D423DBE2863316C0095216C /* Le BaluchonTests */,
-				6D423DC92863316C0095216C /* Le BaluchonUITests */,
 				6D423DA6286331610095216C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,7 +72,6 @@
 			children = (
 				6D423DA5286331610095216C /* Le Baluchon.app */,
 				6D423DBB2863316C0095216C /* Le BaluchonTests.xctest */,
-				6D423DC62863316C0095216C /* Le BaluchonUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,15 +97,6 @@
 				6D423DC12863316C0095216C /* Info.plist */,
 			);
 			path = "Le BaluchonTests";
-			sourceTree = "<group>";
-		};
-		6D423DC92863316C0095216C /* Le BaluchonUITests */ = {
-			isa = PBXGroup;
-			children = (
-				6D423DCA2863316C0095216C /* Le_BaluchonUITests.swift */,
-				6D423DCC2863316C0095216C /* Info.plist */,
-			);
-			path = "Le BaluchonUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,24 +137,6 @@
 			productReference = 6D423DBB2863316C0095216C /* Le BaluchonTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		6D423DC52863316C0095216C /* Le BaluchonUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6D423DD52863316C0095216C /* Build configuration list for PBXNativeTarget "Le BaluchonUITests" */;
-			buildPhases = (
-				6D423DC22863316C0095216C /* Sources */,
-				6D423DC32863316C0095216C /* Frameworks */,
-				6D423DC42863316C0095216C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6D423DC82863316C0095216C /* PBXTargetDependency */,
-			);
-			name = "Le BaluchonUITests";
-			productName = "Le BaluchonUITests";
-			productReference = 6D423DC62863316C0095216C /* Le BaluchonUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -197,10 +150,6 @@
 						CreatedOnToolsVersion = 12.4;
 					};
 					6D423DBA2863316C0095216C = {
-						CreatedOnToolsVersion = 12.4;
-						TestTargetID = 6D423DA4286331610095216C;
-					};
-					6D423DC52863316C0095216C = {
 						CreatedOnToolsVersion = 12.4;
 						TestTargetID = 6D423DA4286331610095216C;
 					};
@@ -221,7 +170,6 @@
 			targets = (
 				6D423DA4286331610095216C /* Le Baluchon */,
 				6D423DBA2863316C0095216C /* Le BaluchonTests */,
-				6D423DC52863316C0095216C /* Le BaluchonUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -238,13 +186,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		6D423DB92863316C0095216C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6D423DC42863316C0095216C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -272,14 +213,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6D423DC22863316C0095216C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6D423DCB2863316C0095216C /* Le_BaluchonUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -287,11 +220,6 @@
 			isa = PBXTargetDependency;
 			target = 6D423DA4286331610095216C /* Le Baluchon */;
 			targetProxy = 6D423DBC2863316C0095216C /* PBXContainerItemProxy */;
-		};
-		6D423DC82863316C0095216C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6D423DA4286331610095216C /* Le Baluchon */;
-			targetProxy = 6D423DC72863316C0095216C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -509,44 +437,6 @@
 			};
 			name = Release;
 		};
-		6D423DD62863316C0095216C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Le BaluchonUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gironnetd.Le-BaluchonUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Le Baluchon";
-			};
-			name = Debug;
-		};
-		6D423DD72863316C0095216C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Le BaluchonUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gironnetd.Le-BaluchonUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Le Baluchon";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -573,15 +463,6 @@
 			buildConfigurations = (
 				6D423DD32863316C0095216C /* Debug */,
 				6D423DD42863316C0095216C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6D423DD52863316C0095216C /* Build configuration list for PBXNativeTarget "Le BaluchonUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6D423DD62863316C0095216C /* Debug */,
-				6D423DD72863316C0095216C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
