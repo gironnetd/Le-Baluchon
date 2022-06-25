@@ -3,6 +3,7 @@
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -64,14 +65,16 @@
             </objects>
             <point key="canvasLocation" x="-301" y="-542"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Le Baluchon-->
         <scene sceneID="JFQ-0f-i0S">
             <objects>
-                <tabBarController id="Nn8-OK-RzZ" sceneMemberID="viewController">
+                <tabBarController id="Nn8-OK-RzZ" customClass="MainViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="Le Baluchon" id="g7l-iB-bYu"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xlG-C9-O5m">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" name="AccentColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="11j-hK-5gn" kind="relationship" relationship="viewControllers" id="lx1-F7-VwF"/>
@@ -86,35 +89,82 @@
         <!--Translate-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TranslationViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qj9-Bf-7AP">
-                                <rect key="frame" x="179" y="452.66666666666669" width="70" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENTER WHAT TO TRANSLATE FROM FRENCH TO ENGLISH :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cS8-XY-RFj">
+                                <rect key="frame" x="20" y="64" width="388" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cS8-XY-RFj" secondAttribute="height" multiplier="194:19" id="MFL-pa-McO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="top" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="iIt-g0-NwT">
+                                <rect key="frame" x="20" y="122" width="388" height="701"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" keyboardDismissMode="interactive" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="pNW-Oi-eV0">
+                                        <rect key="frame" x="0.0" y="0.0" width="388" height="340.66666666666669"/>
+                                        <color key="backgroundColor" red="0.83495479819999996" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="CUb-UH-NDT"/>
+                                        </connections>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="713-Lm-BFW">
+                                        <rect key="frame" x="0.0" y="360.66666666666674" width="388" height="340.33333333333326"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="qj9-Bf-7AP" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3XT-cS-n7Q"/>
-                            <constraint firstItem="qj9-Bf-7AP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="goR-7J-E7z"/>
+                            <constraint firstItem="iIt-g0-NwT" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="10:15" id="Avb-SB-WwM"/>
+                            <constraint firstItem="cS8-XY-RFj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="FsS-xQ-lZj"/>
+                            <constraint firstItem="iIt-g0-NwT" firstAttribute="top" secondItem="cS8-XY-RFj" secondAttribute="bottom" constant="20" id="LWY-C6-R3b"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="iIt-g0-NwT" secondAttribute="bottom" constant="20" id="Q5E-8J-R08"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iIt-g0-NwT" secondAttribute="trailing" constant="20" id="gWV-u3-hPH"/>
+                            <constraint firstItem="cS8-XY-RFj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="nlG-92-B9L"/>
+                            <constraint firstItem="iIt-g0-NwT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="rqm-Ui-rTo"/>
+                            <constraint firstAttribute="trailing" secondItem="cS8-XY-RFj" secondAttribute="trailing" constant="20" id="ze0-Ye-NIz"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Avb-SB-WwM"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Translate" id="AfW-Xd-yGo"/>
+                    <connections>
+                        <outlet property="fromTranslation" destination="pNW-Oi-eV0" id="awn-Co-3jp"/>
+                        <outlet property="toTranslation" destination="713-Lm-BFW" id="I4s-TT-T5o"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="868" y="-100"/>
+            <point key="canvasLocation" x="867.75700934579436" y="-100.43196544276459"/>
         </scene>
     </scenes>
     <resources>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
