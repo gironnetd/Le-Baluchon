@@ -12,8 +12,11 @@ import Foundation
 //
 protocol ApiService {
     
-    associatedtype DataResponse
     associatedtype DataRequest
+    associatedtype CallBackResponse
+    associatedtype DataResponse where DataResponse: Decodable , DataResponse: Encodable
+    
+    static var shared: Self { get }
     
     typealias Parameter = (key: String, value: String, description: String)
     
@@ -22,11 +25,13 @@ protocol ApiService {
     var parameters: [Parameter] { get }
     var request: URLRequest { get }
     
-    func retrieveData(from dataRequest: DataRequest, callBack: @escaping (DataResponse?, NetworkError?) -> Void)
+    var session: URLSession { get set }
+
+    func retrieveData(from dataRequest: DataRequest, callBack: @escaping (CallBackResponse?, NetworkError?) -> Void)
 }
 
 extension ApiService {
-    func retrieveTask(with request: URLRequest, completionHandler: @escaping (TranslationResponse?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-        return URLSession.shared.codableTask(with: request, completionHandler: completionHandler)
+    func retrieveTask(with request: URLRequest, completionHandler: @escaping (Self.DataResponse?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return session.codableTask(with: request, completionHandler: completionHandler)
     }
 }

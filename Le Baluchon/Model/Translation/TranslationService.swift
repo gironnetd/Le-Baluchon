@@ -10,14 +10,21 @@ import Foundation
 //
 // MARK: - Translate Service
 //
-class TranslationService: ApiService {
+final class TranslationService: ApiService {
     
-    static var shared = TranslationService()
+    static var shared: TranslationService = TranslationService()
     
     private init(){}
     
-    typealias DataResponse = String
+    internal var session: URLSession = URLSession(configuration: .default)
+    
+    init(session: URLSession) {
+        self.session = session
+    }
+    
     typealias DataRequest = String
+    typealias CallBackResponse = String
+    typealias DataResponse = TranslationResponse
     
     internal var endPoint: String {
         "https://translate.googleapis.com/"
@@ -59,13 +66,8 @@ class TranslationService: ApiService {
     func retrieveData(from dataRequest: String, callBack: @escaping (String?, NetworkError?) -> Void) {
         q.value = dataRequest.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         
-        let task = retrieveTask(with: request){ data, response, error in
+        let task = retrieveTask(with: request) { data, response, error in
             DispatchQueue.main.async {
-                guard let translation = data, error == nil else {
-                    callBack(nil, NetworkError.NotFound)
-                    return
-                }
-            
                 guard let response = response as? HTTPURLResponse else {
                     callBack(nil, NetworkError.NotImplemented)
                     return
@@ -75,6 +77,12 @@ class TranslationService: ApiService {
                     callBack(nil, NetworkError(rawValue: response.statusCode))
                     return
                 }
+                
+                guard let translation = data, error == nil else {
+                    callBack(nil, NetworkError.NotFound)
+                    return
+                }
+            
                 callBack(translation.data.translations[0].translatedText, nil)
             }
         }
