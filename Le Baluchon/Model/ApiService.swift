@@ -14,24 +14,70 @@ protocol ApiService {
     
     associatedtype DataRequest
     associatedtype CallBackResponse
-    associatedtype DataResponse where DataResponse: Decodable , DataResponse: Encodable
+    associatedtype DataResponse where DataResponse: Codable
     
     static var shared: Self { get }
     
-    typealias Parameter = (key: String, value: String, description: String)
-    
-    var endPoint: String { get }
-    var url: URL { get }
     var parameters: [Parameter] { get }
-    var request: URLRequest { get }
+//    var apiKey: Parameter { get }
+    
+    var httpMethod: HttpMethod { get }
+    var host: String { get }
+    var path: String { get }
+    var endPoint: String { get set }
     
     var session: URLSession { get set }
-
+    var task: URLSessionDataTask? { get set }
+    
     func retrieveData(from dataRequest: DataRequest, callBack: @escaping (CallBackResponse?, NetworkError?) -> Void)
 }
 
 extension ApiService {
+    
+    var scheme: String { "https" }
+    
+    func apiKey(keyPlist: String, keyParameter: String) -> Parameter {
+        let filePath = Bundle.main.path(forResource: "ApiKeys", ofType: "plist")
+        let apiKeys = NSDictionary(contentsOfFile:filePath!)
+        let value = apiKeys?.object(forKey: keyPlist) as! String
+        return Parameter(key: keyParameter, value: value, description: "")
+    }
+    
+    var queryItems: [URLQueryItem] {
+        parameters.filter { parameter in parameter.value != nil }
+            .map { parameter in URLQueryItem(name: parameter.key, value: parameter.value) }
+    }
+    
+    var request: URLRequest {
+        var components: URLComponents = URLComponents()
+        
+        components.scheme = scheme
+        components.host = host
+        components.path = path
+        components.queryItems = queryItems
+        
+        var url = URLRequest(url: components.url!)
+        url.httpMethod = httpMethod.rawValue
+        return url
+    }
+    
     func retrieveTask(with request: URLRequest, completionHandler: @escaping (Self.DataResponse?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
         return session.codableTask(with: request, completionHandler: completionHandler)
+    }
+    
+    func handleError(data: DataResponse?, response: URLResponse?, error: Error?) -> NetworkError? {
+        guard let response = response as? HTTPURLResponse else {
+            return NetworkError.NotImplemented
+        }
+        
+        guard response.statusCode == 200 else  {
+            return NetworkError(rawValue: response.statusCode)
+        }
+        
+        guard data != nil, error == nil else {
+            return NetworkError.NotFound
+        }
+        
+        return nil
     }
 }

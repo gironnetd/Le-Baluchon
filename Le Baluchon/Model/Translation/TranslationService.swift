@@ -26,66 +26,40 @@ final class TranslationService: ApiService {
     typealias CallBackResponse = String
     typealias DataResponse = TranslationResponse
     
-    internal var endPoint: String {
-        "https://translate.googleapis.com/"
-    }
-    
-    private let basic = "language/translate/v2"
-    
-    internal var url: URL {
-        URL(string: endPoint + basic)!
-    }
-    
-    private lazy var q = Parameter(key: "q", value: "", description: "")
-    private let target = Parameter(key : "target", value: "en", description: "")
-    private let source = Parameter(key: "source", value: "fr", description: "")
-    private let format = Parameter(key: "format", value: "text", description: "")
-    private var apiKey: Parameter {
-        let filePath = Bundle.main.path(forResource: "ApiKeys", ofType: "plist")
-        let apiKeys = NSDictionary(contentsOfFile:filePath!)
-        let value = apiKeys?.object(forKey: "TranslationApiKey") as! String
-        return Parameter(key: "key", value: value, description: "")
-    }
+    private lazy var q = Parameter(key: "q")
+    private let target = Parameter(key : "target", value: "en")
+    private let source = Parameter(key: "source", value: "fr")
+    private let format = Parameter(key: "format", value: "text")
     
     internal var parameters: [Parameter] {
-        [q, target, source, format, apiKey]
+         [q, target, source, format, apiKey(keyPlist: "TranslationApiKey", keyParameter: "key")]
     }
     
-    internal var request: URLRequest {
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = parameters.reduce(into: "", { result, parameter in
-            result.append("\(parameter.key)=\(parameter.value)")
-            if let lastParameter = parameters.last , parameter != lastParameter {
-                result.append("&")
-            }
-        }).data(using: .utf8)
-        return request
-    }
+    internal var httpMethod: HttpMethod { HttpMethod.post }
+    internal var host: String { "translate.googleapis.com" }
+    internal var endPoint: String = "translate/v2"
+    internal var path: String { "/language/" + endPoint }
+    
+    internal var task: URLSessionDataTask?
     
     func retrieveData(from dataRequest: String, callBack: @escaping (String?, NetworkError?) -> Void) {
-        q.value = dataRequest.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        q.value = dataRequest
         
-        let task = retrieveTask(with: request) { data, response, error in
-            DispatchQueue.main.async {
-                guard let response = response as? HTTPURLResponse else {
-                    callBack(nil, NetworkError.NotImplemented)
+        task?.cancel()
+        task = retrieveTask(with: request) { data, response, error in
+            DispatchQueue.main.async { [self] in
+                if let networkError = handleError(data: data, response: response, error: error) {
+                    callBack(nil, networkError)
                     return
                 }
                 
-                guard response.statusCode == 200 else  {
-                    callBack(nil, NetworkError(rawValue: response.statusCode))
-                    return
-                }
-                
-                guard let translation = data, error == nil else {
-                    callBack(nil, NetworkError.NotFound)
+                guard let translationResponse = data else {
                     return
                 }
             
-                callBack(translation.data.translations[0].translatedText, nil)
+                callBack(translationResponse.data.translations[0].translatedText, nil)
             }
         }
-        task.resume()
+        task?.resume()
     }
 }

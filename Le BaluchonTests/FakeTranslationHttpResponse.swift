@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FakeNetworkResponse {
+class FakeTranslationHttpResponse {
     
     static let OkHttpResponse = HTTPURLResponse(
        url: URL(string: "https://openclassrooms.com")!,

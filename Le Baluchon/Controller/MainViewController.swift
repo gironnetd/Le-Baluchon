@@ -7,6 +7,9 @@
 
 import UIKit
 
+//
+// MARK: - Main ViewController
+//
 class MainViewController: UITabBarController {
 
     override func viewDidLoad() {

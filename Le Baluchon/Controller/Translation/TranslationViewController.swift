@@ -7,6 +7,9 @@
 
 import UIKit
 
+//
+// MARK: - Translation ViewController
+//
 class TranslationViewController: UIViewController {
     
     @IBOutlet private weak var fromTranslation: UITextView!

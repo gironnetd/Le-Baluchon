@@ -15,7 +15,7 @@ class TranslationServiceTestCase: XCTestCase {
     
     func test_GivenCorrectTranslationAndOkHttpResponse_WhenRetreiveData_ThenResultIsCorrect() {
         // Given Correct Translation And OkHttp Response
-        let service = TranslationService(session: FakeURLSession(data: FakeTranslationResponse.correctTranslation, response: FakeNetworkResponse.OkHttpResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: FakeTranslationResponse.correctTranslation, response: FakeTranslationHttpResponse.OkHttpResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -40,7 +40,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then Result Is Correct
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.NotImplementedResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.NotImplementedResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -49,7 +49,7 @@ class TranslationServiceTestCase: XCTestCase {
     
     func test_GivenNilTranslationAndFailedHttpResponse_WhenRetreiveData_ThenFailedHttpErrorIsThrown() {
         // Given Nil Translation And Failed HttpResponse
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.failedHttpResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.failedHttpResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -57,7 +57,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then Failed Http Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.failedHttpResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.failedHttpResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -66,7 +66,7 @@ class TranslationServiceTestCase: XCTestCase {
     
     func test_GivenNilTranslationAndNotFoundResponse_WhenRetreiveData_ThenNotFoundErrorIsThrown() {
         // Given Nil Translation And NotFound Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.NotFoundResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.NotFoundResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -74,7 +74,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then NotFound Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.NotFoundResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.NotFoundResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -83,7 +83,7 @@ class TranslationServiceTestCase: XCTestCase {
         
     func test_GivenNilTranslationAndUnauthorizedResponse_WhenRetreiveData_ThenUnauthorizedErrorIsThrown() {
         // Given Nil Translation And Unauthorized Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.UnauthorizedResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.UnauthorizedResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -91,7 +91,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then Unauthorized Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.UnauthorizedResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.UnauthorizedResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -100,7 +100,7 @@ class TranslationServiceTestCase: XCTestCase {
     
     func test_GivenNilTranslationAndForbiddenResponse_WhenRetreiveData_ThenForbiddenErrorIsThrown() {
         // Given Nil Translation And Forbidden Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.ForbiddenResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.ForbiddenResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -108,7 +108,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then Forbidden Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.ForbiddenResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.ForbiddenResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -117,7 +117,7 @@ class TranslationServiceTestCase: XCTestCase {
     
     func test_GivenNilTranslationAndBadRequestResponse_WhenRetreiveData_ThenBadRequestErrorIsThrown() {
         // Given Nil Translation And BadRequest Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.BadRequestResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.BadRequestResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -125,7 +125,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then BadRequest Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.BadRequestResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.BadRequestResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -134,7 +134,7 @@ class TranslationServiceTestCase: XCTestCase {
 
     func test_GivenNilTranslationAndTooManyRequestsResponse_WhenRetreiveData_ThenTooManyRequestsErrorIsThrown() {
         // Given Nil Translation And TooManyRequests Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.TooManyRequestsResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.TooManyRequestsResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -142,7 +142,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then TooManyRequests Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.TooManyRequestsResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.TooManyRequestsResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -151,7 +151,7 @@ class TranslationServiceTestCase: XCTestCase {
         
     func test_GivenNilTranslationAndInternalServerErrorResponse_WhenRetreiveData_ThenInternalServerErrorIsThrown() {
         // Given Nil Translation And InternalServerError Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.InternalServerErrorResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.InternalServerErrorResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -159,7 +159,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then InternalServer Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.InternalServerErrorResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.InternalServerErrorResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -168,7 +168,7 @@ class TranslationServiceTestCase: XCTestCase {
         
     func test_GivenNilTranslationAndBadGatewayResponse_WhenRetreiveData_ThenBadGatewayErrorIsThrown() {
         // Given Nil Translation And BadGateway Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.BadGatewayResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.BadGatewayResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -176,7 +176,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then BadGateway Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.BadGatewayResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.BadGatewayResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -185,7 +185,7 @@ class TranslationServiceTestCase: XCTestCase {
         
     func test_GivenNilTranslationAndServiceUnavailableResponse_WhenRetreiveData_ThenServiceUnavailableErrorIsThrown() {
         // Given Nil Translation And ServiceUnavailable Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.ServiceUnavailableResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.ServiceUnavailableResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -193,7 +193,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then ServiceUnavailable Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.ServiceUnavailableResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.ServiceUnavailableResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -202,7 +202,7 @@ class TranslationServiceTestCase: XCTestCase {
     
     func test_GivenNilTranslationAndGatewayTimedOutResponse_WhenRetreiveData_ThenGatewayTimedOutErrorIsThrown() {
         // Given Nil Translation And GatewayTimedOut Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.GatewayTimedOutResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.GatewayTimedOutResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -210,7 +210,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then GatewayTimedOut Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.GatewayTimedOutResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.GatewayTimedOutResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -219,7 +219,7 @@ class TranslationServiceTestCase: XCTestCase {
         
     func test_GivenNilTranslationAndNotImplementedResponse_WhenRetreiveData_ThenNotImplementedErrorIsThrown() {
         // Given Nil Translation And NotImplemented Response
-        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeNetworkResponse.NotImplementedResponse, error: nil))
+        let service = TranslationService(session: FakeURLSession(data: nil, response: FakeTranslationHttpResponse.NotImplementedResponse, error: nil))
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
@@ -227,7 +227,7 @@ class TranslationServiceTestCase: XCTestCase {
             // Then NotImplemented Error Is Thrown
             XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeNetworkResponse.NotImplementedResponse.statusCode)
+            XCTAssertEqual(error?.rawValue, FakeTranslationHttpResponse.NotImplementedResponse.statusCode)
             expectation.fulfill()
         }
         
