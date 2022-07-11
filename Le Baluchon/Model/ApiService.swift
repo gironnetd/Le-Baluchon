@@ -19,7 +19,6 @@ protocol ApiService {
     static var shared: Self { get }
     
     var parameters: [Parameter] { get }
-//    var apiKey: Parameter { get }
     
     var httpMethod: HttpMethod { get }
     var host: String { get }
@@ -28,6 +27,8 @@ protocol ApiService {
     
     var session: URLSession { get set }
     var task: URLSessionDataTask? { get set }
+    
+    func populateParameters(dataRequest: DataRequest)
     
     func retrieveData(from dataRequest: DataRequest, callBack: @escaping (CallBackResponse?, NetworkError?) -> Void)
 }

@@ -50,29 +50,6 @@ final class ExchangeService: ApiService {
     
     internal var task: URLSessionDataTask?
     
-    private func populateParameters(dataRequest: DataRequest) {
-        endPoint = dataRequest.endPoint.rawValue
-        
-        if dataRequest.endPoint == .latest, let baseCurrency = dataRequest.baseCurrency,
-           let symbolCurrencies = dataRequest.symbolCurrencies  {
-            self.base.value = baseCurrency
-            symbols.value = symbolCurrencies.joined(separator: ",")
-        }
-    }
-    
-    func retrieveRatesFromUserDefault(dataRequest: DataRequest) -> [String: Double]? {
-        if let rates = userDefaults.dictionary(forKey: Constants.RATES),
-           let baseCurrency = dataRequest.baseCurrency,
-           let symbolCurrencies = dataRequest.symbolCurrencies,
-           let ratesFromBaseCurrency = rates[baseCurrency] as? [String: Double],
-           symbolCurrencies.map({ key in ratesFromBaseCurrency.keys.contains(key)}).allSatisfy({
-            isSatisfy in isSatisfy
-           }) {
-            return ratesFromBaseCurrency
-        }
-        return nil
-    }
-    
     func retrieveData(from dataRequest: DataRequest,
                       callBack: @escaping ([String: Any]?, NetworkError?) -> Void) {
         populateParameters(dataRequest: dataRequest)
@@ -97,11 +74,36 @@ final class ExchangeService: ApiService {
         }
     }
     
+    internal func populateParameters(dataRequest: DataRequest) {
+        endPoint = dataRequest.endPoint.rawValue
+        
+        if dataRequest.endPoint == .latest, let baseCurrency = dataRequest.baseCurrency,
+           let symbolCurrencies = dataRequest.symbolCurrencies  {
+            self.base.value = baseCurrency
+            symbols.value = symbolCurrencies.joined(separator: ",")
+        }
+    }
+    
     private func shouldBeUpdated() -> Bool {
         if let lastDateUpdated = userDefaults.string(forKey: Constants.LAST_DATE_UPDATED) {
             return lastDateUpdated != dateFormatter.string(from: Date())
         }
         return true
+    }
+    
+    func retrieveRatesFromUserDefault(dataRequest: DataRequest) -> [String: Double]? {
+        if let rates = userDefaults.dictionary(forKey: Constants.RATES),
+           let baseCurrency = dataRequest.baseCurrency,
+           let symbolCurrencies = dataRequest.symbolCurrencies,
+           let ratesFromBaseCurrency = rates[baseCurrency] as? [String: Double],
+           symbolCurrencies.map({ key in ratesFromBaseCurrency.keys.contains(key)}).allSatisfy({
+            isSatisfy in isSatisfy
+           }) {
+            return ratesFromBaseCurrency.filter { key, value in
+                symbolCurrencies.contains(key)
+            }
+        }
+        return nil
     }
     
     private func performRequest(dataRequest: DataRequest, completion : @escaping (_ data: [String: Any]?, _ error: NetworkError?) -> Void)   {
@@ -121,7 +123,11 @@ final class ExchangeService: ApiService {
                 switch dataRequest.endPoint {
                 case .latest:
                     updateUserDefault(dataRequest: dataRequest, exchangeResponse: exchangeResponse)
-                    completion(exchangeResponse.rates, nil)
+                    if let symbolCurrencies = dataRequest.symbolCurrencies {
+                        completion(exchangeResponse.rates?.filter { key, value in
+                            symbolCurrencies.contains(key)
+                        }, nil)
+                    }
                 case .symbols:
                     userDefaults.set(exchangeResponse.symbols, forKey: Constants.SYMBOLS)
                     completion(exchangeResponse.symbols, nil)

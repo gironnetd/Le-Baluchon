@@ -46,6 +46,20 @@ class ExchangeViewController: UIViewController {
         return base
     }()
     
+    lazy var keyboardButton: UIButton = {
+        let base = UIButton(type: .custom)
+        base.addTarget(self, action: #selector(openKeyboard(_:)), for: .touchUpInside)
+        base.setImage(UIImage(named: "keyboard"), for: .normal)
+        base.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        
+        base.translatesAutoresizingMaskIntoConstraints = false
+        return base
+    }()
+    
+    @objc private func openKeyboard(_ sender: AnyObject) {
+        fromAmount.becomeFirstResponder()
+    }
+    
     lazy var symbolCurrencyButton: UIButton = {
         let base = UIButton(type: .custom)
         base.setTitle(symbolCurrency, for: .normal)
@@ -62,6 +76,13 @@ class ExchangeViewController: UIViewController {
         super.viewDidLoad()
         fromAmount.leftViewMode = .always
         fromAmount.leftView = baseCurrencyButton
+        
+        fromAmount.rightViewMode = .always
+        fromAmount.rightView = keyboardButton
+        
+        fromAmount.layer.cornerRadius = 4.0
+        fromAmount.layer.borderWidth = 1
+        fromAmount.layer.borderColor = UIColor.orange.cgColor
         
         toAmount.leftViewMode = .always
         toAmount.leftView = symbolCurrencyButton

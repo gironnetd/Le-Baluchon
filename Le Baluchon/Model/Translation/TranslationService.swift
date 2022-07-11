@@ -43,7 +43,7 @@ final class TranslationService: ApiService {
     internal var task: URLSessionDataTask?
     
     func retrieveData(from dataRequest: String, callBack: @escaping (String?, NetworkError?) -> Void) {
-        q.value = dataRequest
+        populateParameters(dataRequest: dataRequest)
         
         task?.cancel()
         task = retrieveTask(with: request) { data, response, error in
@@ -61,5 +61,9 @@ final class TranslationService: ApiService {
             }
         }
         task?.resume()
+    }
+    
+    func populateParameters(dataRequest: String) {
+        q.value = dataRequest
     }
 }

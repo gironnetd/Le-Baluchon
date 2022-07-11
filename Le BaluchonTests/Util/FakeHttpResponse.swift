@@ -7,13 +7,13 @@
 
 import Foundation
 
-class FakeTranslationHttpResponse {
+class FakeHttpResponse {
     
     static let OkHttpResponse = HTTPURLResponse(
        url: URL(string: "https://openclassrooms.com")!,
        statusCode: 200, httpVersion: nil, headerFields: [:])!
 
-    static let failedHttpResponse = HTTPURLResponse(
+    static let FailedHttpResponse = HTTPURLResponse(
        url: URL(string: "https://openclassrooms.com")!,
        statusCode: 500, httpVersion: nil, headerFields: [:])!
         
