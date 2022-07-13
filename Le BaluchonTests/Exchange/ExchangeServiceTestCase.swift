@@ -10,8 +10,8 @@ import XCTest
 
 class ExchangeServiceTestCase: XCTestCase {
     
-    let baseCurrency = "EUR"
-    var symbolCurrencies = ["USD", "GBP", "JPY"]
+    private let baseCurrency = "EUR"
+    private var symbolCurrencies = ["USD", "GBP", "JPY"]
     
     override func setUp() {
         symbolCurrencies = ["USD", "GBP", "JPY"]

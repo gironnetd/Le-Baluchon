@@ -15,7 +15,7 @@ class FakeExchangeResponse {
        return try! Data(contentsOf: url)
     }
     
-    static let incorrectExchange = "erreur".data(using: .utf8)!
+    static let incorrectRates = "erreur".data(using: .utf8)!
     
     static var correctSymbols: Data? {
        let bundle = Bundle(for: FakeExchangeResponse.self)

@@ -36,7 +36,10 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
                     localCityWeather.temp.text = String(result.main.temp)
                     localCityWeather.minTemp.text = String(result.main.tempMin)
                     localCityWeather.maxTemp.text = String(result.main.tempMax)
-                    localCityWeather.icon.image = UIImage(data: result.weather[0].iconImage!)
+                    if let icon = result.weather[0].iconImage {
+                        localCityWeather.icon.image = UIImage(data: icon)
+                    }
+                    
                     localCityWeather.humidity.text = String(result.main.humidity)
                     localCityWeather.visibility.text = String(result.visibility)
                     
@@ -56,7 +59,9 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
                     selectedCityWeather.temp.text = String(result.main.temp)
                     selectedCityWeather.minTemp.text = String(result.main.tempMin)
                     selectedCityWeather.maxTemp.text = String(result.main.tempMax)
-                    selectedCityWeather.icon.image = UIImage(data: result.weather[0].iconImage!)
+                    if let icon = result.weather[0].iconImage {
+                        selectedCityWeather.icon.image = UIImage(data: icon)
+                    }
                     selectedCityWeather.humidity.text = String(result.main.humidity)
                     selectedCityWeather.visibility.text = String(result.visibility)
                 }

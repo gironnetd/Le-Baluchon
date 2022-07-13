@@ -13,7 +13,23 @@
 import Foundation
 
 // MARK: - WeatherResponse
-struct WeatherResponse: Codable {
+struct WeatherResponse: Codable, Equatable {
+    static func == (lhs: WeatherResponse, rhs: WeatherResponse) -> Bool {
+        return lhs.coord == rhs.coord &&
+            lhs.weather == rhs.weather &&
+        lhs.base == rhs.base &&
+        lhs.main == rhs.main &&
+        lhs.visibility == rhs.visibility &&
+        lhs.wind == rhs.wind &&
+        lhs.clouds == rhs.clouds &&
+        lhs.dt == rhs.dt &&
+        lhs.sys == rhs.sys &&
+        lhs.timezone == rhs.timezone &&
+        lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.cod == rhs.cod 
+    }
+    
     let coord: Coord
     var weather: [Weather]
     let base: String
@@ -29,17 +45,17 @@ struct WeatherResponse: Codable {
 }
 
 // MARK: - Clouds
-struct Clouds: Codable {
+struct Clouds: Codable, Equatable {
     let all: Int
 }
 
 // MARK: - Coord
-struct Coord: Codable {
+struct Coord: Codable, Equatable {
     let lon, lat: Double
 }
 
 // MARK: - Main
-struct Main: Codable {
+struct Main: Codable, Equatable {
     let temp, feelsLike, tempMin, tempMax: Double
     let pressure, humidity: Int
 
@@ -53,14 +69,14 @@ struct Main: Codable {
 }
 
 // MARK: - Sys
-struct Sys: Codable {
+struct Sys: Codable, Equatable {
     let type, id: Int
     let country: String
     let sunrise, sunset: Int
 }
 
 // MARK: - Weather
-struct Weather: Codable {
+struct Weather: Codable, Equatable {
     let id: Int
     let main, weatherDescription, icon: String
     var iconImage: Foundation.Data?
@@ -74,7 +90,7 @@ struct Weather: Codable {
 }
 
 // MARK: - Wind
-struct Wind: Codable {
+struct Wind: Codable, Equatable {
     let speed: Double
     let deg: Int
 }

@@ -15,6 +15,12 @@ final class WeatherService: ApiService {
     private init(){}
     
     internal var session: URLSession = URLSession(configuration: .default)
+    private var iconSession: URLSession = URLSession(configuration: .default)
+    
+    init(session: URLSession, iconSession: URLSession) {
+        self.session = session
+        self.iconSession = iconSession
+    }
     
     typealias DataRequest = WeatherRequest
     typealias CallBackResponse = WeatherResponse
@@ -44,13 +50,6 @@ final class WeatherService: ApiService {
     
     internal var task: URLSessionDataTask?
     
-    private lazy var locationManager: CLLocationManager =  {
-        var locationManager = CLLocationManager()
-        locationManager.requestAlwaysAuthorization()
-        locationManager.stopUpdatingLocation()
-        return locationManager
-    }()
-    
     internal func populateParameters(dataRequest: WeatherRequest) {
         self.cityName.value = dataRequest.cityName
         if let latitude = dataRequest.latitude, let longitude = dataRequest.longitude {
@@ -76,6 +75,10 @@ final class WeatherService: ApiService {
                 }
                 
                 retrieveWeatherIcon(weather: weatherResponse, callBack: { response, error in
+                    guard error == nil else {
+                        callBack(weatherResponse, nil)
+                        return
+                    }
                     callBack(response, nil)
                 })
             }
@@ -91,9 +94,9 @@ final class WeatherService: ApiService {
         self.endPoint = WeatherEndPoint.icon.rawValue + weather.weather[0].icon + ".png"
         
         task?.cancel()
-        task = session.dataTask(with: request) { data, response, error in
+        task = iconSession.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async { [self] in
-                if let networkError = handleError(data: weather, response: response, error: error) {
+                if let networkError = handleError(data: nil, response: response, error: error) {
                     callBack(nil, networkError)
                     return
                 }

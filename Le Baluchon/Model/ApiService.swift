@@ -75,7 +75,7 @@ extension ApiService {
             return NetworkError(rawValue: response.statusCode)
         }
         
-        guard data != nil, error == nil else {
+        guard error == nil else {
             return NetworkError.NotFound
         }
         
