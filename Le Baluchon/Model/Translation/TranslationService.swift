@@ -38,7 +38,10 @@ final class TranslationService: ApiService {
     internal var httpMethod: HttpMethod { HttpMethod.post }
     internal var host: String { "translate.googleapis.com" }
     internal var endPoint: String = "translate/v2"
-    internal var path: String { "/language/" + endPoint }
+    internal var path: String {
+        get { "/language/" + endPoint }
+        set {}
+    }
     
     internal var task: URLSessionDataTask?
     

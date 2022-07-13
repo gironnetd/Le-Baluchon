@@ -22,7 +22,7 @@ protocol ApiService {
     
     var httpMethod: HttpMethod { get }
     var host: String { get }
-    var path: String { get }
+    var path: String { get set }
     var endPoint: String { get set }
     
     var session: URLSession { get set }

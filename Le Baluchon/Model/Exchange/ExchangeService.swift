@@ -46,7 +46,10 @@ final class ExchangeService: ApiService {
     internal var httpMethod: HttpMethod { HttpMethod.get }
     internal var host: String { "api.apilayer.com" }
     internal var endPoint: String = ExchangeEndPoint.latest.rawValue
-    internal var path: String  { "/fixer/" + endPoint }
+    internal var path: String  {
+        get { "/fixer/" + endPoint }
+        set {}
+    }
     
     internal var task: URLSessionDataTask?
     
