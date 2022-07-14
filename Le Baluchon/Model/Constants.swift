@@ -8,6 +8,8 @@
 import Foundation
 
 final class Constants {
+    public static let TRANSLATION_LANGUAGE = "TRANSLATION_LANGUAGE"
+    
     public static let DEFAULT_BASE_CURRENCY = "EUR"
     public static let DEFAULT_SYMBOL_CURRENCY = "USD"
     

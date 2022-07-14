@@ -20,7 +20,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then Failed Http Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.FailedHttpResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.FailedHttpResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -37,7 +37,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then NotFound Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.NotFoundResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.NotFoundResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -54,7 +54,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then Unauthorized Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.UnauthorizedResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.UnauthorizedResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -71,7 +71,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then Forbidden Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.ForbiddenResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.ForbiddenResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -88,7 +88,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then BadRequest Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.BadRequestResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.BadRequestResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -105,7 +105,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then TooManyRequests Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.TooManyRequestsResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.TooManyRequestsResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -122,7 +122,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then InternalServer Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.InternalServerErrorResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.InternalServerErrorResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -139,7 +139,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then BadGateway Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.BadGatewayResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.BadGatewayResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -156,7 +156,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then ServiceUnavailable Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.ServiceUnavailableResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.ServiceUnavailableResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -173,7 +173,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then GatewayTimedOut Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.GatewayTimedOutResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.GatewayTimedOutResponse.statusCode)
             expectation.fulfill()
         }
         
@@ -190,7 +190,7 @@ class NetworkErrorTestCase: XCTestCase {
             // Then NotImplemented Error Is Thrown
             // XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.NotImplementedResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.NotImplementedResponse.statusCode)
             expectation.fulfill()
         }
         

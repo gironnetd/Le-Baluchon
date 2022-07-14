@@ -14,6 +14,10 @@ class MainViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UITabBar.appearance().backgroundImage = UIImage()
+        UITabBar.appearance().shadowImage     = UIImage()
+        UITabBar.appearance().clipsToBounds   = true
+        UITabBar.appearance().tintColor = UIColor.orange
         // Do any additional setup after loading the view.
     }
 }

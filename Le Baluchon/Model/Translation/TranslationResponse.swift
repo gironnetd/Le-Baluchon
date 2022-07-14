@@ -9,16 +9,31 @@ import Foundation
 
 // MARK: - TranslationResponse
 struct TranslationResponse: Codable {
-    let data: Data
+    
+    let data: Data?
 }
 
 // MARK: - Data
 struct Data: Codable {
-    let translations: [Translation]
+    let translations: [Translation]?
+    let detections: [[Detection]]?
+    let languages: [Language]?
 }
 
 // MARK: - Translation
 struct Translation: Codable {
     let translatedText: String
+}
+
+// MARK: - Detection
+struct Detection: Codable {
+    let confidence: Int
+    let isReliable: Bool
+    let language: String
+}
+
+// MARK: - Language
+struct Language: Codable {
+    let language: String
 }
 

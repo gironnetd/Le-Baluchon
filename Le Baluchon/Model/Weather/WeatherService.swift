@@ -31,7 +31,15 @@ final class WeatherService: ApiService {
     private var longitude: Parameter = Parameter(key: "lon")
     
     var parameters: [Parameter] {
-        [cityName, latitude, longitude, apiKey(keyPlist: "WeatherApiKey", keyParameter: "appid")]
+        if endPoint.contains(WeatherEndPoint.icon.rawValue) {
+           return [apiKey(keyPlist: "WeatherApiKey", keyParameter: "appid")]
+        }
+        
+        if endPoint == WeatherEndPoint.weather.rawValue {
+           return [cityName, latitude, longitude, apiKey(keyPlist: "WeatherApiKey", keyParameter: "appid")]
+        }
+        
+        return []
     }
     
     var httpMethod: HttpMethod { HttpMethod.get }
@@ -87,10 +95,6 @@ final class WeatherService: ApiService {
     }
     
     func retrieveWeatherIcon(weather: WeatherResponse, callBack: @escaping (WeatherResponse?, NetworkError?) -> Void) {
-        self.cityName.value = nil
-        self.latitude.value = nil
-        self.longitude.value = nil
-        
         self.endPoint = WeatherEndPoint.icon.rawValue + weather.weather[0].icon + ".png"
         
         task?.cancel()

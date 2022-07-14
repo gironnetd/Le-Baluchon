@@ -72,7 +72,7 @@ extension ApiService {
         }
         
         guard response.statusCode == 200 else  {
-            return NetworkError(rawValue: response.statusCode)
+            return NetworkError(rawValue: (code: response.statusCode, title: nil, message: nil))
         }
         
         guard error == nil else {

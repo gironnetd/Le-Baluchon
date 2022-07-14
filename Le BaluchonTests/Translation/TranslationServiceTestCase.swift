@@ -19,12 +19,14 @@ class TranslationServiceTestCase: XCTestCase {
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-        service.retrieveData(from: "") { translation, error in
+        service.retrieveData(from: "") { result, error in
             // Then Result Is Correct
             XCTAssertNil(error)
-            XCTAssertNotNil(translation)
-            XCTAssertEqual(translation, self.toText)
-            expectation.fulfill()
+            XCTAssertNotNil(result)
+            if let translation = result?.translation {
+                XCTAssertEqual(translation, self.toText)
+                expectation.fulfill()
+            }
         }
         
         wait(for: [expectation], timeout: 5.0)
@@ -36,11 +38,10 @@ class TranslationServiceTestCase: XCTestCase {
         
         // When Retreive Data
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-        service.retrieveData(from: "") { translation, error in
+        service.retrieveData(from: "") { result, error in
             // Then Result Is Correct
-            XCTAssertNil(translation)
             XCTAssertNotNil(error)
-            XCTAssertEqual(error?.rawValue, FakeHttpResponse.NotImplementedResponse.statusCode)
+            XCTAssertEqual(error?.rawValue.code, FakeHttpResponse.NotImplementedResponse.statusCode)
             expectation.fulfill()
         }
         

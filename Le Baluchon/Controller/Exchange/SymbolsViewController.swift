@@ -15,16 +15,18 @@ class SymbolsViewController: UITableViewController {
     private var symbols: [String] = []
     
     weak var rootViewController: ExchangeViewController?
+    public var addCurrency: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let nib = UINib(nibName: "SymbolTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "SymbolTableViewCell")
-        
+        tableView.separatorStyle = .none
         ExchangeService.shared.retrieveData(
             from: ExchangeRequest(endPoint: .symbols), callBack: { symbols, error in
-                guard error == nil else {
+                if let error = error,let title = error.rawValue.title, let message = error.rawValue.message {
+                    self.presentAlertViewController(title: title, message: message)
                     return
                 }
                 
@@ -34,6 +36,12 @@ class SymbolsViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             })
+    }
+    
+    func presentAlertViewController(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert,animated: true, completion: nil )
     }
     
     // MARK: - Table view data source
@@ -53,7 +61,14 @@ class SymbolsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        rootViewController?.baseCurrency = String(self.symbols[indexPath.row].split(separator: " ")[0])
+        let symbol = String(self.symbols[indexPath.row].split(separator: " ")[0])
+        
+        if addCurrency {
+            rootViewController?.symbolsCurrenciesForBaseCurrency.append(symbol)
+            rootViewController?.retrieveRates()
+        } else {
+            rootViewController?.baseCurrency = symbol
+        }
         dismiss(animated: true, completion: nil)
     }
     
