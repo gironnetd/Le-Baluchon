@@ -7,9 +7,10 @@
 
 import Foundation
 
-// MARK: - TranslationResponse
+//
+// MARK: - Translation Response
+//
 struct TranslationResponse: Codable {
-    
     let data: Data?
 }
 

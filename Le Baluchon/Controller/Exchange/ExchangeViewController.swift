@@ -12,10 +12,11 @@ import UIKit
 //
 class ExchangeViewController: UIViewController {
 
-    @IBOutlet weak var addCurrency: UILabel!
-    @IBOutlet weak var currencyTableView: UITableView!
+
+    @IBOutlet private weak var addCurrency: UIButton!
+    @IBOutlet private weak var currencyTableView: UITableView!
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet private weak var fromAmount: UITextField! {
         didSet {
@@ -118,8 +119,6 @@ class ExchangeViewController: UIViewController {
         currencyTableView.dataSource = self
         currencyTableView.separatorStyle = .none
         
-        addCurrency.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentCurrenciesViewController(_:))))
-        
         retrieveRates()
     }
     
@@ -133,6 +132,10 @@ class ExchangeViewController: UIViewController {
     
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         fromAmount.resignFirstResponder()
+    }
+    
+    @IBAction func addCurrency(_ sender: Any) {
+        presentSymbolsViewController(nil)
     }
     
     @IBAction func convert(_ sender: Any) {
@@ -161,10 +164,12 @@ class ExchangeViewController: UIViewController {
         })
     }
     
-    @objc private func presentSymbolsViewController(_ sender: AnyObject) {
+    @objc private func presentSymbolsViewController(_ sender: AnyObject?) {
         let symbolsViewController = SymbolsViewController()
         symbolsViewController.rootViewController = self
-        
+        if sender == nil {
+            symbolsViewController.addCurrency = true
+        }
         present(symbolsViewController, animated: true, completion: nil)
     }
     
@@ -213,7 +218,12 @@ extension ExchangeViewController: UITableViewDataSource {
         
         if let currency = currenciesForBaseCurrency[cell.baseCurrency] {
             let conversion = ((Double(fromAmount.text!)!) * (currency))
-            cell.textField.text = "\(conversion)"
+            
+            let formatter: NumberFormatter = NumberFormatter()
+            formatter.maximumFractionDigits = 2
+            if let result = formatter.string(from: conversion as NSNumber) {
+                cell.textField.text = "\(result)"
+            }
         }
         
         return cell

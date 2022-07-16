@@ -16,7 +16,7 @@ final class ExchangeService: ApiService {
     
     private init(){}
     
-    internal var session: URLSession = URLSession(configuration: .default)
+    internal var session: URLSession? = URLSession(configuration: .default)
     
     init(session: URLSession) {
         self.session = session
@@ -45,10 +45,9 @@ final class ExchangeService: ApiService {
     
     internal var httpMethod: HttpMethod { HttpMethod.get }
     internal var host: String { "api.apilayer.com" }
-    internal var endPoint: String = ExchangeEndPoint.latest.rawValue
+    internal var endPoint: EndPoint = ExchangeEndPoint.latest
     internal var path: String  {
-        get { "/fixer/" + endPoint }
-        set {}
+        get { "/fixer/" + (endPoint as! ExchangeEndPoint).rawValue }
     }
     
     internal var task: URLSessionDataTask?
@@ -78,7 +77,7 @@ final class ExchangeService: ApiService {
     }
     
     internal func populateParameters(dataRequest: DataRequest) {
-        endPoint = dataRequest.endPoint.rawValue
+        endPoint = dataRequest.endPoint
         
         if dataRequest.endPoint == .latest, let baseCurrency = dataRequest.baseCurrency,
            let symbolCurrencies = dataRequest.symbolCurrencies  {
@@ -111,14 +110,10 @@ final class ExchangeService: ApiService {
     
     private func performRequest(dataRequest: DataRequest, completion : @escaping (_ data: [String: Any]?, _ error: NetworkError?) -> Void)   {
         task?.cancel()
-        task = retrieveTask(with: request) { data, response, error in
+        task = session?.retrieveTask(with: request, to: DataResponse.self) { data, response, error in
             DispatchQueue.main.async { [self] in
-                if let networkError = handleError(data: data, response: response, error: error) {
-                    return completion(nil, networkError)
-                }
-                
                 guard let exchangeResponse = data else {
-                    return
+                    return completion(nil, handleError(data: data, response: response, error: error))
                 }
                 
                 userDefaults.set(dateFormatter.string(from: Date()), forKey: Constants.LAST_DATE_UPDATED)

@@ -16,11 +16,14 @@ final class TranslationService: ApiService {
     
     private init(){}
     
-    internal var session: URLSession = URLSession(configuration: .default)
-    private var detectSession: URLSession = URLSession(configuration: .default)
+    internal var session: URLSession? = URLSession(configuration: .default)
+    private var detectionSession: URLSession? = URLSession(configuration: .default)
+    private var languagesSession: URLSession? = URLSession(configuration: .default)
     
-    init(session: URLSession) {
+    init(detectionSession: URLSession? = nil, session: URLSession? = nil, languagesSession: URLSession? = nil) {
+        self.detectionSession = detectionSession
         self.session = session
+        self.languagesSession = languagesSession
     }
     
     typealias DataRequest = String
@@ -34,22 +37,19 @@ final class TranslationService: ApiService {
 
     internal var httpMethod: HttpMethod { HttpMethod.post }
     internal var host: String { "translate.googleapis.com" }
-    internal var endPoint: String = TranslationEndPoint.translate.rawValue
+    internal var endPoint: EndPoint = TranslationEndPoint.translate
     internal var path: String {
-        get { "/language/translate/v2" + endPoint }
-        set {}
+        get { "/language/translate/v2" + (endPoint as! TranslationEndPoint).rawValue }
     }
     
     internal var parameters: [Parameter] {
-        switch endPoint {
-        case TranslationEndPoint.translate.rawValue:
+        switch endPoint as! TranslationEndPoint {
+        case TranslationEndPoint.translate:
             return [q, target, source, format, apiKey(keyPlist: "TranslationApiKey", keyParameter: "key")]
-        case TranslationEndPoint.detect.rawValue:
+        case TranslationEndPoint.detect:
             return [q, apiKey(keyPlist: "TranslationApiKey", keyParameter: "key")]
-        case TranslationEndPoint.languages.rawValue:
+        case TranslationEndPoint.languages:
             return [apiKey(keyPlist: "TranslationApiKey", keyParameter: "key")]
-        default:
-            return []
         }
     }
     
@@ -57,20 +57,15 @@ final class TranslationService: ApiService {
     
     func detectLanguage(from dataRequest: String, callBack: @escaping (String?, NetworkError?) -> Void) {
         q.value = dataRequest
-        self.endPoint = TranslationEndPoint.detect.rawValue
+        self.endPoint = TranslationEndPoint.detect
         
         task?.cancel()
-        task = retrieveTask(with: request) { data, response, error in
+        task = detectionSession?.retrieveTask(with: request, to: DataResponse.self) { data, response, error in
             DispatchQueue.main.async { [self] in
-                if let networkError = handleError(data: nil, response: response, error: error) {
-                    callBack(nil, networkError)
-                    return
-                }
-                
                 guard let detectionResponse = data,
                       let detection = detectionResponse.data?.detections?[0]
                 else {
-                    callBack(nil, NetworkError.NotFound)
+                    callBack(nil, handleError(data: data, response: response, error: error))
                     return
                 }
             
@@ -83,13 +78,8 @@ final class TranslationService: ApiService {
     func retrieveData(from dataRequest: String, callBack: @escaping ((detection: String?, translation: String?)?, NetworkError?) -> Void) {
         
         detectLanguage(from: dataRequest, callBack: { [self] detection, error in
-            guard error == nil else {
+            guard let detection = detection, error == nil else {
                 callBack((nil, nil), error)
-                return
-            }
-            
-            guard let detection = detection else {
-                callBack((nil, nil), nil)
                 return
             }
             
@@ -99,21 +89,17 @@ final class TranslationService: ApiService {
             target.value = UserDefaults.standard.string(forKey: Constants.TRANSLATION_LANGUAGE)
             populateParameters(dataRequest: dataRequest)
             
-            self.endPoint = TranslationEndPoint.translate.rawValue
+            self.endPoint = TranslationEndPoint.translate
             
             task?.cancel()
-            task = retrieveTask(with: request) { data, response, error in
+            task = session?.retrieveTask(with: request, to: DataResponse.self) { data, response, error in
                 DispatchQueue.main.async { [self] in
-                    if let networkError = handleError(data: data, response: response, error: error) {
-                        callBack((nil, nil), networkError)
+                    guard let translationResponse = data,
+                          let translation = translationResponse.data?.translations  else {
+                        callBack((nil, nil), handleError(data: data, response: response, error: error))
                         return
                     }
                     
-                    guard let translationResponse = data,
-                          let translation = translationResponse.data?.translations else {
-                        return
-                    }
-                
                     callBack((nil, translation[0].translatedText), nil)
                 }
             }
@@ -126,20 +112,13 @@ final class TranslationService: ApiService {
     }
     
     func retrieveLanguages(callBack: @escaping ([String]?, NetworkError?) -> Void) {
-        self.endPoint = TranslationEndPoint.languages.rawValue
+        self.endPoint = TranslationEndPoint.languages
         
         task?.cancel()
-        task = retrieveTask(with: request) { data, response, error in
+        task = languagesSession?.retrieveTask(with: request, to: DataResponse.self) { data, response, error in
             DispatchQueue.main.async { [self] in
-                if let networkError = handleError(data: nil, response: response, error: error) {
-                    callBack(nil, networkError)
-                    return
-                }
-                
-                guard let detectionResponse = data,
-                      let languages = detectionResponse.data?.languages
-                else {
-                    callBack(nil, nil)
+                guard let languagesResponse = data, let languages = languagesResponse.data?.languages else {
+                    callBack(nil, handleError(data: data, response: response, error: error))
                     return
                 }
             

@@ -5,14 +5,11 @@
 //  Created by damien on 11/07/2022.
 //
 
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
-//
-//   let weatherResponse = try? newJSONDecoder().decode(WeatherResponse.self, from: jsonData)
-
 import Foundation
 
-// MARK: - WeatherResponse
+//
+// MARK: - Weather Response
+//
 struct WeatherResponse: Codable, Equatable {
     static func == (lhs: WeatherResponse, rhs: WeatherResponse) -> Bool {
         return lhs.coord == rhs.coord &&

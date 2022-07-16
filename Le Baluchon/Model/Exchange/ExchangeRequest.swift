@@ -8,7 +8,7 @@
 import Foundation
 
 //
-// MARK: - ExchangeRequest
+// MARK: - Exchange Request
 //
 struct ExchangeRequest {
     var endPoint: ExchangeEndPoint

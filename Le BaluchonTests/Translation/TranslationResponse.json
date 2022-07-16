@@ -4,15 +4,6 @@
             {
                 "translatedText": "I'm watching TV"
             }
-        ],
-        "detections": [
-              [
-                {
-                  "confidence": 1,
-                  "isReliable": false,
-                  "language": "es"
-                }
-              ]
-            ]
+        ]
     }
 }

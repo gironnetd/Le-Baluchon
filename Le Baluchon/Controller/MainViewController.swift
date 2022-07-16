@@ -18,6 +18,5 @@ class MainViewController: UITabBarController {
         UITabBar.appearance().shadowImage     = UIImage()
         UITabBar.appearance().clipsToBounds   = true
         UITabBar.appearance().tintColor = UIColor.orange
-        // Do any additional setup after loading the view.
     }
 }

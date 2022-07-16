@@ -7,6 +7,9 @@
 
 import Foundation
 
+//
+// MARK: - Constants
+//
 final class Constants {
     public static let TRANSLATION_LANGUAGE = "TRANSLATION_LANGUAGE"
     

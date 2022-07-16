@@ -8,6 +8,9 @@
 import UIKit
 import CoreLocation
 
+//
+// MARK: - Weather ViewController
+//
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet private weak var cityNameTextField: UITextField! {
@@ -17,12 +20,12 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    @IBOutlet weak var localCityWeather: CityWeatherView!
+    @IBOutlet private weak var localCityWeather: CityWeatherView!
     
-    @IBOutlet weak var selectedCityWeather: CityWeatherView!
+    @IBOutlet private weak var selectedCityWeather: CityWeatherView!
     private var selectedCityName: String = "New York"
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private var locationManager: CLLocationManager = CLLocationManager()
     

@@ -8,7 +8,7 @@
 import UIKit
 
 //
-// MARK: - SymbolTableViewCell
+// MARK: - Symbol TableViewCell
 //
 class SymbolTableViewCell: UITableViewCell {
     

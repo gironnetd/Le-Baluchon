@@ -75,7 +75,7 @@ class SymbolsViewController: UITableViewController {
     //setting header view
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x:0, y:0, width: tableView.frame.size.width, height: 50))
-        headerView.backgroundColor = .brown
+        headerView.backgroundColor = .systemOrange
         let title = UILabel(frame: CGRect(x:10, y:10, width: tableView.frame.size.width, height: 50))
         title.text = "Choose your Currency :"
         title.textColor = .white

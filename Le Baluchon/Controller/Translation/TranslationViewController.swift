@@ -19,11 +19,11 @@ class TranslationViewController: UIViewController {
     
     private let defaultLanguageTranslation = "en"
     
-    @IBOutlet weak var autoDetectedLanguage: UILabel!
+    @IBOutlet private weak var autoDetectedLanguage: UILabel!
     @IBOutlet private weak var chooseLanguage: UIStackView!
     private var languages: [String] = []
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private let userDefaults: UserDefaults = UserDefaults.standard
     
@@ -46,15 +46,13 @@ class TranslationViewController: UIViewController {
         toTranslation.layer.cornerRadius = 4.0
         toTranslation.layer.borderWidth = 1
         toTranslation.layer.borderColor = UIColor.orange.cgColor
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.navigationItem.title = "Translation"
     }
     
-    @objc func chooseLanguage(sender: Any?) {
+    @objc private func chooseLanguage(sender: Any?) {
         let alert = UIAlertController(title: "Choose Language", message: "\n\n\n\n\n\n", preferredStyle: .alert)
         
         let pickerFrame = UIPickerView(frame: CGRect(x: 5, y: 20, width: 250, height: 140))
@@ -76,13 +74,21 @@ class TranslationViewController: UIViewController {
         })
     }
     
-    @IBAction func translate(_ sender: Any) {
+    @IBAction private func translate(_ sender: Any) {
         translate()
     }
     
     private func translate() {
+        guard !fromTranslation.text.isEmpty else {
+            presentAlertViewController(title: "No text to translate", message:
+                                        "Sorry, but you have not enter text to translate")
+            
+            return
+        }
+        
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
+        
         TranslationService.shared.retrieveData(from: fromTranslation.text) { [self] result, error in
             guard error == nil else {
                 switch error {
@@ -113,13 +119,13 @@ class TranslationViewController: UIViewController {
         }
     }
     
-    func presentAlertViewController(title: String, message: String) {
+    private func presentAlertViewController(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert,animated: true, completion: nil )
     }
     
-    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+    @IBAction private func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         fromTranslation.resignFirstResponder()
     }
 }

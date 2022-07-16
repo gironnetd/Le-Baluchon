@@ -31,7 +31,6 @@ class WeatherServiceTestCase: XCTestCase {
         
         let dataRequest: WeatherRequest = WeatherRequest(cityName: selectedCityName)
         
-        
         service.retrieveData(from: dataRequest, callBack: { result, error in
             // Then Result Is Not Null
             XCTAssertNil(error)
@@ -83,7 +82,6 @@ class WeatherServiceTestCase: XCTestCase {
             XCTAssertEqual(result, self.weatherResponse)
             XCTAssertNil(result!.weather[0].iconImage)
             
-        
             expectation.fulfill()
         })
         
@@ -92,7 +90,27 @@ class WeatherServiceTestCase: XCTestCase {
     
     func test_GivenWeatherRequest_WhenRetrieveDataAndSessionReturnsFailedHttpResponse_ThenErrorIsThrown() {
         // Given Weather Request
-        let service = WeatherService(session: FakeURLSession(data: FakeWeatherResponse.correctWeather, response: FakeHttpResponse.FailedHttpResponse, error: nil), iconSession: FakeURLSession(data: FakeWeatherResponse.correctIcon, response: FakeHttpResponse.OkHttpResponse, error: nil))
+        let service = WeatherService(session: FakeURLSession(data: nil, response: FakeHttpResponse.FailedHttpResponse, error: nil), iconSession: FakeURLSession(data: FakeWeatherResponse.correctIcon, response: FakeHttpResponse.OkHttpResponse, error: nil))
+        
+        // When Retrieve Data And Session Returns Failed HttpResponse
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
+        
+        let dataRequest: WeatherRequest = WeatherRequest(cityName: selectedCityName)
+        
+        service.retrieveData(from: dataRequest, callBack: { result, error in
+            // Then Error Is Thrown
+            XCTAssertNotNil(error)
+            XCTAssertNil(result)
+        
+            expectation.fulfill()
+        })
+        
+        wait(for: [expectation], timeout: 5.0)
+    }
+    
+    func test_GivenWeatherRequest_WhenRetrieveDataAndSessionReturnsNilResponse_ThenErrorIsThrown() {
+        // Given Weather Request
+        let service = WeatherService(session: FakeURLSession(data: nil, response: nil, error: nil), iconSession: FakeURLSession(data: FakeWeatherResponse.correctIcon, response: FakeHttpResponse.OkHttpResponse, error: nil))
         
         // When Retrieve Data And Session Returns Failed HttpResponse
         let expectation = XCTestExpectation(description: "Wait for queue change.")

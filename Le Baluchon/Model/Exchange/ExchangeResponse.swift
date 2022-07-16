@@ -8,7 +8,7 @@
 import Foundation
 
 //
-// MARK: - ExchangeResponse
+// MARK: - Exchange Response
 //
 struct ExchangeResponse: Codable {
     let success: Bool

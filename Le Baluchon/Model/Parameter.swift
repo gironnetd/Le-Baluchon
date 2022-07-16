@@ -7,6 +7,9 @@
 
 import Foundation
 
+//
+// MARK: - Parameter
+//
 struct Parameter {
     var key: String
     var value: String?

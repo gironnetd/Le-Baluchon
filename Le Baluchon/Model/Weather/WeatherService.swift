@@ -6,15 +6,17 @@
 //
 
 import Foundation
-import CoreLocation
 
+//
+// MARK: - Weather Service
+//
 final class WeatherService: ApiService {
     
     static var shared: WeatherService = WeatherService()
     
     private init(){}
     
-    internal var session: URLSession = URLSession(configuration: .default)
+    internal var session: URLSession? = URLSession(configuration: .default)
     private var iconSession: URLSession = URLSession(configuration: .default)
     
     init(session: URLSession, iconSession: URLSession) {
@@ -31,15 +33,12 @@ final class WeatherService: ApiService {
     private var longitude: Parameter = Parameter(key: "lon")
     
     var parameters: [Parameter] {
-        if endPoint.contains(WeatherEndPoint.icon.rawValue) {
-           return [apiKey(keyPlist: "WeatherApiKey", keyParameter: "appid")]
+        switch endPoint as! WeatherEndPoint {
+        case WeatherEndPoint.icon:
+            return [apiKey(keyPlist: "WeatherApiKey", keyParameter: "appid")]
+        case WeatherEndPoint.weather:
+            return [cityName, latitude, longitude, apiKey(keyPlist: "WeatherApiKey", keyParameter: "appid")]
         }
-        
-        if endPoint == WeatherEndPoint.weather.rawValue {
-           return [cityName, latitude, longitude, apiKey(keyPlist: "WeatherApiKey", keyParameter: "appid")]
-        }
-        
-        return []
     }
     
     var httpMethod: HttpMethod { HttpMethod.get }
@@ -47,14 +46,14 @@ final class WeatherService: ApiService {
     var host: String { "api.openweathermap.org" }
     var path: String  {
         get {
-            if endPoint == WeatherEndPoint.weather.rawValue {
-                return "/data/2.5/" + endPoint
+            if (endPoint as! WeatherEndPoint) == WeatherEndPoint.weather {
+                return "/data/2.5/" + (endPoint as! WeatherEndPoint).rawValue
             }
-            return endPoint
+            return (endPoint as! WeatherEndPoint).rawValue + weatherIcon!
         }
-        set {}
     }
-    var endPoint: String = WeatherEndPoint.weather.rawValue
+    var endPoint: EndPoint = WeatherEndPoint.weather
+    var weatherIcon: String?
     
     internal var task: URLSessionDataTask?
     
@@ -67,18 +66,14 @@ final class WeatherService: ApiService {
     }
     
     func retrieveData(from dataRequest: WeatherRequest, callBack: @escaping (WeatherResponse?, NetworkError?) -> Void) {
-        self.endPoint = WeatherEndPoint.weather.rawValue
+        self.endPoint = WeatherEndPoint.weather
         populateParameters(dataRequest: dataRequest)
         
         task?.cancel()
-        task = retrieveTask(with: request) { data, response, error in
+        task = session?.retrieveTask(with: request, to: DataResponse.self) { data, response, error in
             DispatchQueue.main.async { [self] in
-                if let networkError = handleError(data: data, response: response, error: error) {
-                    callBack(nil, networkError)
-                    return
-                }
-                
                 guard let weatherResponse = data else {
+                    callBack(nil, handleError(data: data, response: response, error: error))
                     return
                 }
                 
@@ -95,12 +90,13 @@ final class WeatherService: ApiService {
     }
     
     func retrieveWeatherIcon(weather: WeatherResponse, callBack: @escaping (WeatherResponse?, NetworkError?) -> Void) {
-        self.endPoint = WeatherEndPoint.icon.rawValue + weather.weather[0].icon + ".png"
+        self.endPoint = WeatherEndPoint.icon
+        self.weatherIcon = weather.weather[0].icon + ".png"
         
         task?.cancel()
         task = iconSession.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async { [self] in
-                if let networkError = handleError(data: nil, response: response, error: error) {
+                if let networkError = handleError(data: weather, response: response, error: error) {
                     callBack(nil, networkError)
                     return
                 }

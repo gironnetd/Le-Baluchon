@@ -7,6 +7,9 @@
 
 import UIKit
 
+//
+// MARK: - Currency TableViewCell
+//
 class CurrencyTableViewCell: UITableViewCell {
 
     @IBOutlet weak var textField: UITextField!

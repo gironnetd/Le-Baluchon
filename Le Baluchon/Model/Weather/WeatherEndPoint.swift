@@ -7,7 +7,10 @@
 
 import Foundation
 
-enum WeatherEndPoint: String {
+//
+// MARK: - Weather EndPoint
+//
+enum WeatherEndPoint: String, EndPoint {
     case weather = "weather"
     case icon = "/img/w/"
 }

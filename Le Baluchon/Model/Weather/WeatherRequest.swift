@@ -8,6 +8,9 @@
 import Foundation
 import CoreLocation
 
+//
+// MARK: - Weather Request
+//
 struct WeatherRequest {
     var cityName: String?
     var latitude: CLLocationDegrees?

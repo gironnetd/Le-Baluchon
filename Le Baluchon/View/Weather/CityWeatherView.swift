@@ -7,6 +7,9 @@
 
 import UIKit
 
+//
+// MARK: - City Weather View
+//
 @IBDesignable class CityWeatherView: UIView {
 
     @IBOutlet var contentView: UIView!

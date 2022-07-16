@@ -22,10 +22,10 @@ protocol ApiService {
     
     var httpMethod: HttpMethod { get }
     var host: String { get }
-    var path: String { get set }
-    var endPoint: String { get set }
+    var path: String { get }
+    var endPoint: EndPoint { get set }
     
-    var session: URLSession { get set }
+    var session: URLSession? { get set }
     var task: URLSessionDataTask? { get set }
     
     func populateParameters(dataRequest: DataRequest)
@@ -62,9 +62,9 @@ extension ApiService {
         return url
     }
     
-    func retrieveTask(with request: URLRequest, completionHandler: @escaping (Self.DataResponse?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-        return session.codableTask(with: request, completionHandler: completionHandler)
-    }
+//    func retrieveTask(with request: URLRequest, completionHandler: @escaping (Self.DataResponse?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+//        return session.codableTask(with: request, completionHandler: completionHandler)
+//    }
     
     func handleError(data: DataResponse?, response: URLResponse?, error: Error?) -> NetworkError? {
         guard let response = response as? HTTPURLResponse else {
@@ -75,7 +75,7 @@ extension ApiService {
             return NetworkError(rawValue: (code: response.statusCode, title: nil, message: nil))
         }
         
-        guard error == nil else {
+        guard data != nil, error == nil else {
             return NetworkError.NotFound
         }
         

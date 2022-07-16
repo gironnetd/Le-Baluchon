@@ -7,7 +7,10 @@
 
 import Foundation
 
-enum TranslationEndPoint: String {
+//
+// MARK: - Translation EndPoint
+//
+enum TranslationEndPoint: String, EndPoint {
    case translate = ""
    case detect = "/detect"
    case languages = "/languages"

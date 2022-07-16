@@ -8,9 +8,9 @@
 import Foundation
 
 //
-// MARK: - ExchangeEndPoint
+// MARK: - Exchange EndPoint
 //
-enum ExchangeEndPoint: String {
+enum ExchangeEndPoint: String, EndPoint {
     case latest = "latest"
     case symbols = "symbols"
 }
