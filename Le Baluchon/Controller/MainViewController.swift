@@ -11,9 +11,14 @@ import UIKit
 // MARK: - Main ViewController
 //
 class MainViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 13.0, *) {
+            // Always adopt a light interface style.
+            overrideUserInterfaceStyle = .light
+        }
+        
         UITabBar.appearance().backgroundImage = UIImage()
         UITabBar.appearance().shadowImage     = UIImage()
         UITabBar.appearance().clipsToBounds   = true

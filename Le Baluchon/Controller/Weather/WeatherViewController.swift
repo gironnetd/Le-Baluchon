@@ -46,9 +46,43 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
+        if CLLocationManager.locationServicesEnabled() {
+            let authorizationStatus: CLAuthorizationStatus
+
+            if #available(iOS 14, *) {
+                let manager = CLLocationManager()
+                authorizationStatus = manager.authorizationStatus
+            } else {
+                authorizationStatus = CLLocationManager.authorizationStatus()
+            }
+            
+            switch authorizationStatus {
+                case .notDetermined:
+                    grantPermissionForLocation()
+                case .restricted, .denied:
+                    let alertController = UIAlertController(title: "Location Permission Required", message: "Please enable location permissions in settings.", preferredStyle: .alert)
+                        
+                        let okAction = UIAlertAction(title: "Settings", style: .default, handler: {(cAlertAction) in
+                            //Redirect to Settings app
+                            UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!, completionHandler: {_ in
+                                self.grantPermissionForLocation()
+                            })
+                        })
+                        
+                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                        alertController.addAction(cancelAction)
+                        
+                        alertController.addAction(okAction)
+                        
+                        self.present(alertController, animated: true, completion: nil)
+                case .authorizedAlways, .authorizedWhenInUse:
+                    grantPermissionForLocation()
+                @unknown default:
+                    break
+            }
+        } else {
+            grantPermissionForLocation()
+        }
         
         cityNameTextField.rightViewMode = .always
         cityNameTextField.rightView = keyboardButton
@@ -56,6 +90,12 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         cityNameTextField.layer.cornerRadius = 4.0
         cityNameTextField.layer.borderWidth = 1
         cityNameTextField.layer.borderColor = UIColor.orange.cgColor
+    }
+    
+    private func grantPermissionForLocation() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
